@@ -15,7 +15,7 @@
 }
 .navbar .brand-navbar {
   display: flex;
-  flex: 3;
+  flex: 1;
 }
 .brand-navbar img {
   width: 40px;
@@ -84,4 +84,11 @@
   position: absolute;
   background-color: #000;
   opacity: 0.3;
+}
+.search-title{
+  font-size: 24px;
+  line-height: 18px;
+  color: #2A3C49;
+  margin:20px;
+  font-weight: 600;
 }
