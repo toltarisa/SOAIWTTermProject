@@ -92,3 +92,63 @@
   margin:20px;
   font-weight: 600;
 }
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+  flex-direction: row;
+  flex: 1;
+}
+
+.wrapper .sidebar {
+  flex: 2;
+  height: inherit;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin-right: 40px;
+}
+
+.wrapper .sidebar .sidebar-top {
+  flex: 1;
+}
+.sidebar-top h4 {
+  font-weight: 600;
+}
+.wrapper .sidebar .sidebar-body {
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 200px;
+}
+
+.sidebar-body h5 {
+  font-weight: 400;
+}
+
+.sidebar-body input {
+  padding: 5px;
+  font-size: 16px;
+}
+
+.sidebar-body .next-btn {
+  text-decoration: none;
+  border: 1px solid #bababa;
+  width: 120px;
+  padding: 8px;
+  text-align: center;
+  background: #fff;
+  color: #bbb;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24),
+    0 0 8px 0 rgba(102, 113, 138, 0.24), 0 8px 8px 0 rgba(102, 113, 138, 0.24);
+}
+
+.wrapper .map {
+  flex: 4;
+  height: 500px;
+}
