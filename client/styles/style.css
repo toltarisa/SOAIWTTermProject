@@ -124,7 +124,6 @@
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  height: 200px;
 }
 
 .sidebar-body h5 {
@@ -146,9 +145,43 @@
   color: #bbb;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24),
     0 0 8px 0 rgba(102, 113, 138, 0.24), 0 8px 8px 0 rgba(102, 113, 138, 0.24);
+    margin-top: 15px;
 }
 
 .wrapper .map {
   flex: 4;
-  height: 500px;
+  height: 90vh;
+}
+.results{
+  margin-top: 15px;
+}
+.result-list {
+  border-bottom: 1px solid #e0e0e0;
+  border-top: 1px solid white;
+  line-height: 54px;
+  font-size: 16px;
+  display: flex;
+}
+.result-list-numbering {
+  display: inline-flex;
+  width: 6%;
+}
+.result-list-text {
+  display: inline;
+}
+.result-list-link {
+  overflow: hidden;
+  width: 365px;
+  display: inline-flex;
+  margin-right: 10px;
+  line-height: 24px;
+}
+.result-list-icon {
+  display: inline;
+  color: #00A7DF;
+  margin-left: auto;
+  right: 0;
+}
+.result-list-icon i{
+  font-size: 24px;
 }
