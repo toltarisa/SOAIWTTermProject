@@ -1,0 +1,33 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="form-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <form class="form-signin" asp-controller="Login" asp-action="Index" method="post">
+
+                    <h1 class="h3 mb-3 font-weight-normal">Please Login</h1>
+                    <label for="username" class="sr-only">Username</label>
+                    <input name="username" type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <div class="checkbox mb-3">
+                        <label>
+                            <input type="checkbox" value="remember-me"> Remember me
+                        </label>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+                </form>
+            </div>
+        </div>
+        @if (ViewData["userNotFound"] != null)
+        {
+            <div class="alert-danger alert">@ViewData["userNotFound"]</div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,202 @@
+﻿@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
+    font-family: 'Roboto';
+}
+/* Navbar Component*/
+.navbar {
+    width: 100%;
+    height: 80px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 10px;
+    box-shadow: 0px 0px 5px 0px #00000040;
+}
+
+    .navbar .brand-navbar {
+        display: flex;
+        flex: 3;
+    }
+
+.brand-navbar img {
+    width: 40px;
+}
+
+.navbar .items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    list-style-type: none;
+    flex: 1;
+    margin-bottom: 0;
+}
+
+    .navbar .items li {
+        margin: 0px 25px;
+        font-size: 16px;
+    }
+
+        .navbar .items li a {
+            text-decoration: none;
+            color: #333;
+        }
+/* Showcase Component*/
+.showcase {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: no-repeat center center;
+    background-size: cover;
+    max-width: 100%;
+}
+
+    .showcase .content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        height: 400px;
+    }
+
+        .showcase .content h1 {
+            color: #fff;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .showcase .content input[type='text'] {
+            padding: 20px 10px;
+            width: 70%;
+        }
+
+        .showcase .content .search-btn {
+            width: 160px;
+            height: 50px;
+            text-align: center;
+            padding: 12px 0px;
+            border-radius: 4px;
+            background: #fff;
+            text-decoration: none;
+            color: #000;
+        }
+
+.search-btn img {
+    width: 30px;
+}
+
+.showcase .showcase-bg {
+    width: 100%;
+    height: inherit;
+    position: absolute;
+    background-color: #000;
+    opacity: 0.3;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    flex-direction: row;
+    flex: 1;
+}
+
+    .wrapper .sidebar {
+        flex: 2;
+        height: inherit;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        margin-right: 40px;
+    }
+
+        .wrapper .sidebar .sidebar-top {
+            flex: 1;
+        }
+
+.sidebar-top h4 {
+    font-weight: 600;
+}
+
+.wrapper .sidebar .sidebar-body {
+    flex: 4;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 200px;
+}
+
+.sidebar-body h5 {
+    font-weight: 400;
+}
+
+.sidebar-body input {
+    padding: 5px;
+    font-size: 16px;
+}
+
+.sidebar-body .next-btn {
+    text-decoration: none;
+    border: 1px solid #bababa;
+    width: 120px;
+    padding: 8px;
+    text-align: center;
+    background: #fff;
+    color: #bbb;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.12), 0 2px 2px 0 rgba(0, 0, 0, 0.24), 0 0 8px 0 rgba(102, 113, 138, 0.24), 0 8px 8px 0 rgba(102, 113, 138, 0.24);
+}
+
+.wrapper .map {
+    flex: 4;
+    height: 500px;
+}
+
+/*Login Componenet*/
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form-signin {
+    width: 100%;
+    max-width: 330px;
+    padding: 15px;
+    margin: auto;
+}
+
+    .form-signin .checkbox {
+        font-weight: 400;
+    }
+
+    .form-signin .form-control {
+        position: relative;
+        box-sizing: border-box;
+        height: auto;
+        padding: 10px;
+        font-size: 16px;
+        margin: 15px 0px;
+    }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+    .form-signin input[type='email'] {
+        margin-bottom: -1px;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .form-signin input[type='password'] {
+        margin-bottom: 10px;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+    }

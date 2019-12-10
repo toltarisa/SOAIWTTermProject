@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="form-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-md-12 col-lg-12">
+                <form class="form-signin" asp-controller="SignUp" asp-action="Index" method="post">
+
+                    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+                    <label for="username" class="sr-only"> Username</label>
+                    <input name="username" type="text" id="username" class="form-control" placeholder="Username" required autofocus>
+
+                    <label for="inputEmail" class="sr-only">Email address</label>
+                    <input name="email" type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                    <label for="inputPassword" class="sr-only">Password</label>
+                    <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                    <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
+                </form>
+                @if (ViewData["registerSuccess"] != null)
+                {
+                    <div class="alert alert-success">@ViewData["registerSuccess"]</div>
+
+                }
+                @if (ViewData["userExist"] != null)
+                {
+                    <div class="alert alert-danger">@ViewData["userExist"]</div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
