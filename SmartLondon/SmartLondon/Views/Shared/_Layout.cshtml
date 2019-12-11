@@ -27,8 +27,8 @@
             </div>
             <ul class="items">
                 <li><a href="/">Home</a></li>
-                <li><a href="/match">Match</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="/match">District</a></li>
+                <li><a href="/LondonMaps">London Maps</a></li>
                 @if ((User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value == "User"))
                 {
                     <li><a asp-controller="Login" asp-action="Logout">Logout-@User.Identity.Name</a> </li>
@@ -36,26 +36,12 @@
                 }
                 else
                 {
-                    <li><a style="text-decoration: underline;" href="/signup">Signup</a> </li>
-                    <li> <a style="text-decoration: underline;" href="/login">Login</a></li>
+                    <li> <a href="/login">Login</a></li>
                 }
             </ul>
         </div>
     </div>
     @RenderBody()
-
-    @*<div class="container">
-            <partial name="_CookieConsentPartial" />
-            <main role="main" class="pb-3">
-                @RenderBody()
-            </main>
-        </div>*@
-
-    @*<footer class="border-top footer text-muted">
-            <div class="container">
-                &copy; 2019 - SmartLondon - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-            </div>
-        </footer>*@
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/js/index.js"></script>
     <script src="~/js/initializeGoogleMap.js"></script>
