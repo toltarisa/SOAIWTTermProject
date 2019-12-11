@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using MySql.Data.MySqlClient;
+using SmartLondon.Models;
 
 namespace SmartLondon.Utilities
 {
@@ -23,6 +25,7 @@ namespace SmartLondon.Utilities
             }
         }
 
+        //Stored Procedure 1
         public bool IsUserExist(string username)
         {
             GetConnection();
@@ -45,6 +48,7 @@ namespace SmartLondon.Utilities
             return false;
         }
 
+        //Stored Procedure 2
         public void RegisterUser(string userName, string email, string password)
         {
             GetConnection();
@@ -61,6 +65,7 @@ namespace SmartLondon.Utilities
             connection.Close();
         }
 
+        //Stored Procedure 3
         public bool LoginUser(string userName, string password)
         {
             GetConnection();
@@ -80,6 +85,35 @@ namespace SmartLondon.Utilities
                 return true;
 
             return false;
+        }
+
+        //View 1
+        public MapViewModel GetLocations()
+        {
+            int i = 0;
+
+            GetConnection();
+            var mapView = new MapViewModel();
+
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandText = "SELECT * FROM GetLocations";
+            MySqlDataReader dr = command.ExecuteReader();
+
+            string[] locations = new string[33];
+            string[] lads = new string[33];
+
+            while(dr.Read())
+            {
+                locations[i] = dr["coordinates"].ToString();
+                lads[i] = dr["lad"].ToString();
+                i++;
+            }
+
+            mapView.Locations = locations;
+            mapView.Lad = lads;
+
+            return mapView;
         }
     }
 }

@@ -1,15 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartLondon.Utilities;
 
 namespace SmartLondon.Controllers
 {
     public class LondonMapsController : Controller
     {
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public IActionResult Index(string searchKey)
         {
-            if (string.IsNullOrWhiteSpace(searchKey))
-                return View();
-            else
-                return RedirectToAction("Index", "Home");
+            var database = new DatabaseUtility();
+
+            var getLocations = database.GetLocations();
+
+            return Json(getLocations);
         }
     }
 }
