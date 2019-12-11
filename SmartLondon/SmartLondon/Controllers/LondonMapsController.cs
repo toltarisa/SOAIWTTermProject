@@ -19,5 +19,12 @@ namespace SmartLondon.Controllers
 
             return Json(getLocations);
         }
+
+        public IActionResult London(string district)
+        {
+            ViewData["district"] = district;
+
+            return View();
+        }
     }
 }

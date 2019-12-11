@@ -4,6 +4,9 @@
 }
 @model MapViewModel
 <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<style>
+    .ymaps-2-1-75-controls__toolbar {display: none !important;}
+</style>
 
 <div class="container-fluid">
     <div class="wrapper">
@@ -101,7 +104,6 @@
                                 strokeWidth: 1,
                                 region: data.lad[i]
                             }))
-                        console.log(data.locations[i]);
                     }
 
                 },
@@ -113,11 +115,10 @@
             myMap.geoObjects.events.add('click', function (e) {
                 // Getting a reference to the child object where the event occurred.
                 var object = e.get('target');
-                console.log(object)
 
-                alert(object.options._options.region);
+                window.location.href = "/LondonMaps/London?district=" + object.options._options.region;
             });
         }
-    })
+    });
 
 </script>
