@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartLondon.Models;
 using SmartLondon.Utilities;
 
 namespace SmartLondon.Controllers
@@ -22,9 +23,19 @@ namespace SmartLondon.Controllers
 
         public IActionResult London(string district)
         {
-            ViewData["district"] = district;
+            var database = new DatabaseUtility();
+            var detailView = new DetailView()
+            {
+                Safety = database.GetSafety(district),
+                School = database.GetSchools(district),
+                GreenSpace = database.GetGreenSpace(district),
+                RentPerMonth = database.GetRentPerMonth(district),
+                TravelInfo = database.GetTravelInfo(district),
+                GeneralDescription = database.GetGeneralDescription(district)
 
-            return View();
+            };
+
+            return View(detailView);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace SmartLondon.Utilities
             }
         }
 
-        //Stored Procedure 1
+        //Stored Procedure 1 => isUserExist
         public bool IsUserExist(string username)
         {
             GetConnection();
@@ -34,6 +34,7 @@ namespace SmartLondon.Utilities
             command.CommandType = CommandType.StoredProcedure;
             command.CommandText = "isUserExist";
             command.Parameters.AddWithValue("username", username);
+
             MySqlParameter oblogin = new MySqlParameter();
             oblogin.ParameterName = "yes_no";
             oblogin.MySqlDbType = MySqlDbType.Int16;
@@ -41,6 +42,7 @@ namespace SmartLondon.Utilities
             command.Parameters.Add(oblogin);
             command.ExecuteNonQuery();
             connection.Close();
+
             int res = Convert.ToInt32(oblogin.Value);
             if (res == 1)
                 return true;
@@ -48,7 +50,7 @@ namespace SmartLondon.Utilities
             return false;
         }
 
-        //Stored Procedure 2
+        //Stored Procedure 2 => RegisterUser
         public void RegisterUser(string userName, string email, string password)
         {
             GetConnection();
@@ -65,7 +67,7 @@ namespace SmartLondon.Utilities
             connection.Close();
         }
 
-        //Stored Procedure 3
+        //Stored Procedure 3 => UserLogin
         public bool LoginUser(string userName, string password)
         {
             GetConnection();
@@ -87,7 +89,7 @@ namespace SmartLondon.Utilities
             return false;
         }
 
-        //View 1
+        //View 1 => GetLocations
         public MapViewModel GetLocations()
         {
             int i = 0;
@@ -103,7 +105,7 @@ namespace SmartLondon.Utilities
             string[] locations = new string[33];
             string[] lads = new string[33];
 
-            while(dr.Read())
+            while (dr.Read())
             {
                 locations[i] = dr["coordinates"].ToString();
                 lads[i] = dr["lad"].ToString();
@@ -114,6 +116,74 @@ namespace SmartLondon.Utilities
             mapView.Lad = lads;
 
             return mapView;
+        }
+
+        private string GetSummary(string lad, string procedureName, string returnType = "double")
+        {
+            GetConnection();
+            string getSummary = "";
+
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = procedureName;
+            command.Parameters.AddWithValue("lad", lad);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    if (returnType == "string")
+                    {
+                        getSummary = reader.GetString(0);
+                        break;
+                    }
+                    getSummary = reader.GetDouble(0).ToString();
+
+                }
+            }
+            connection.Close();
+
+            return getSummary;
+        }
+
+        //Stored Procedure 4 => GetSafety
+        public string GetSafety(string lad)
+        {
+            return GetSummary(lad, "GetSafety");
+        }
+
+        //Stored Procedure 5 => GetSchools
+        public string GetSchools(string lad)
+        {
+            return GetSummary(lad, "GetSchools");
+        }
+
+        //Stored Procedure 6 => GetGreenSpace
+        public string GetGreenSpace(string lad)
+        {
+            return GetSummary(lad, "GetGreenSpace");
+        }
+
+        //Stored Procedure 7 => GetRentPerMonth
+        public string GetRentPerMonth(string lad)
+        {
+            return GetSummary(lad, "GetRentPerMonth");
+        }
+
+        //Stored Procedure 8 => GetTravelInfo
+        public string GetTravelInfo(string lad)
+        {
+            return GetSummary(lad, "GetTravelInfo");
+        }
+
+        //Stored Procedure 9 => GetGeneralDescription
+        public string GetGeneralDescription(string lad)
+        {
+            string returnType = "string";
+
+            return GetSummary(lad, "GetGeneralDescription", returnType);
         }
     }
 }

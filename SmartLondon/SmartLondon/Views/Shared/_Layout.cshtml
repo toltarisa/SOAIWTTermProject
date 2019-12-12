@@ -23,20 +23,20 @@
     <div class="navbar">
         <div class="container">
             <div class="brand-navbar">
-                <img src="/img/map.svg" alt="location icon" />
+                <a href="/"><img src="/img/map.svg" alt="location icon" /></a>
             </div>
             <ul class="items">
                 <li><a href="/">Home</a></li>
-                <li><a href="/match">District</a></li>
-                <li><a href="/LondonMaps">London Maps</a></li>
+                <li><a href="/LondonMaps">Maps</a></li>
                 @if ((User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value == "User"))
                 {
-                    <li><a asp-controller="Login" asp-action="Logout">Logout-@User.Identity.Name</a> </li>
+                    <li><a style="text-decoration: underline" asp-controller="Login" asp-action="Logout">Logout @User.Identity.Name</a> </li>
 
                 }
                 else
                 {
-                    <li> <a href="/login">Login</a></li>
+                    <li><a style="text-decoration: underline" href="/login">Login</a></li>
+                    <li><a style="text-decoration: underline" href="/signup">Register</a></li>
                 }
             </ul>
         </div>

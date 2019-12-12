@@ -2,6 +2,16 @@
 @{
     ViewData["Title"] = "London";
 }
+@model DetailView
 
-@ViewData["district"]
-
+Safety = @Model.Safety
+<br />
+School = @Model.School
+<br />
+Green Space = @Model.GreenSpace
+<br />
+Rent per Month = @Model.RentPerMonth
+<br />
+Travel = @Model.TravelInfo
+<br />
+General Description = @Model.GeneralDescription

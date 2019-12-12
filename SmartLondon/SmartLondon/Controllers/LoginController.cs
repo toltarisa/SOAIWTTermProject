@@ -14,6 +14,7 @@ namespace SmartLondon.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["userNotFound"] = null;
             return View();
         }
 
@@ -41,7 +42,7 @@ namespace SmartLondon.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            ViewData["userNotFound"] = "Girdiğiniz kullanıcı bilgilerinde bir kullanıcı bulunamadı.";
+            ViewData["userNotFound"] = "Account could not found";
             return View();
         }
         public IActionResult Logout()

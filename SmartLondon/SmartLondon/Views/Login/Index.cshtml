@@ -20,15 +20,15 @@
                         </label>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button><br />
-                    <a class="text-center" href="/signup">Signup</a>
+                    <a class="text-center justify-content-center" href="/signup" style="display: block !important">Signup</a><br />
+                    @if (ViewData["userNotFound"] != null)
+                    {
+                        <div class="alert-danger alert">@ViewData["userNotFound"]</div>
+                    }
                     <p class="mt-5 mb-3 text-muted text-center">&copy; 2017-2019</p>
                 </form>
             </div>
         </div>
-        @if (ViewData["userNotFound"] != null)
-        {
-            <div class="alert-danger alert">@ViewData["userNotFound"]</div>
-        }
     </div>
 </div>
 

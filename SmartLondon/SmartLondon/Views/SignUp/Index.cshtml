@@ -19,18 +19,19 @@
                     <label for="inputPassword" class="sr-only">Password</label>
                     <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required>
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign Up</button><br />
+                    @if (ViewData["registerSuccess"] != null)
+                    {
+                        <div class="alert alert-success">@ViewData["registerSuccess"]</div>
+
+                    }
+                    @if (ViewData["userExist"] != null)
+                    {
+                        <div class="alert alert-danger">@ViewData["userExist"]</div>
+                    }
                     <p class="mt-5 mb-3 text-muted">&copy; 2017-2019</p>
                 </form>
-                @if (ViewData["registerSuccess"] != null)
-                {
-                    <div class="alert alert-success">@ViewData["registerSuccess"]</div>
-
-                }
-                @if (ViewData["userExist"] != null)
-                {
-                    <div class="alert alert-danger">@ViewData["userExist"]</div>
-                }
+                
             </div>
         </div>
     </div>

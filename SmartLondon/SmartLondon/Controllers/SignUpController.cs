@@ -19,13 +19,12 @@ namespace SmartLondon.Controllers
 
             if (isUserExist)
             {
-                ViewData["userExist"] =
-                    "Girdiğiniz kullanıcı adı daha önce alınmış, lütfen başka bir kullanıcı adı deneyiniz.";
+                ViewData["userExist"] = "Username already exist. Please type a new username";
                 return View();
             }
 
             database.RegisterUser(username, email, password);
-            ViewData["registerSuccess"] = "Başarılı bir şekilde kayıt oldunuz.";
+            ViewData["registerSuccess"] = "Register successfully";
             return View();
         }
     }
