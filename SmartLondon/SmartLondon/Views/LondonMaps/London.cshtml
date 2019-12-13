@@ -3,15 +3,333 @@
     ViewData["Title"] = "London";
 }
 @model DetailView
+@using System.Security.Claims
+@using System.Web;
 
-Safety = @Model.Safety
-<br />
-School = @Model.School
-<br />
-Green Space = @Model.GreenSpace
-<br />
-Rent per Month = @Model.RentPerMonth
-<br />
-Travel = @Model.TravelInfo
-<br />
-General Description = @Model.GeneralDescription
+
+@*Safety = @Model.Safety
+    <br />
+    School = @Model.School
+    <br />
+    Green Space = @Model.GreenSpace
+    <br />
+    Rent per Month = @Model.RentPerMonth
+    <br />
+    Travel = @Model.TravelInfo
+    <br />
+    General Description = @Model.GeneralDescription*@
+<link href="~/css/style-navbar.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+        integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha256-5+02zu5UULQkO7w1GIr6vftCgMfFdZcAHeDtFnKZsBs=" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+<script nomodule="" src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons/ionicons.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+<script>
+    window.onload = function () {
+        // Construct options first and then pass it as a parameter
+        var options1 = {
+            animationEnabled: true,
+            title: {
+                text: "Chart inside a jQuery Resizable Element"
+            },
+            data: [{
+                type: "column", //change it to line, area, bar, pie, etc
+                legendText: "Try Resizing with the handle to the bottom right",
+                showInLegend: true,
+                dataPoints: [
+                    { y: 10 },
+                    { y: 6 },
+                    { y: 14 },
+                    { y: 12 },
+                    { y: 19 },
+                    { y: 14 },
+                    { y: 26 },
+                    { y: 10 },
+                    { y: 22 }
+                ]
+            }]
+        };
+        //$("#resizable").resizable({
+        //    create: function (event, ui) {
+        //        //Create chart.
+        //        $("#chartContainer1").CanvasJSChart(options1);
+        //    },
+        //    resize: function (event, ui) {
+        //        //Update chart size according to its container size.
+        //        $("#chartContainer1").CanvasJSChart().render();
+        //    }
+        //});
+    }
+</script>
+<script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+<!--Tab Panel -->
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="styled-tab">
+                <ul class="justify-content-center nav nav-tab" role="tablist" id="myTab">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="overview-tab" data-toggle="tab" data-target="#overview" role="tab"
+                           aria-controls="overview" aria-selected="true">Overview</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="realestate-tab" data-toggle="tab" data-target="#realestate" role="tab"
+                           aria-controls="realestate" aria-selected="false">Real Estate</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="school-tab" data-toggle="tab" data-target="#school" role="tab"
+                           aria-controls="school" aria-selected="false">School</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="crime-tab" data-toggle="tab" data-target="#crime" role="tab" aria-controls="crime"
+                           aria-selected="false">Crime</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " id="transportation-tab" data-toggle="tab" data-target="#transportation" role="tab"
+                           aria-controls="transportation" aria-selected="false">Others</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="tab-content" id="myTabContent">
+    <!--Overview Component -->
+    <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+        <div>
+            <div class="container mt-3">
+                <div class="row row-header d-flex justify-content-center align-items-center mt-5">
+                    <h3 style="text-align: center;" class="text-white ">Total Statistic</h3>
+                </div>
+                <table class="detail-table mt-3" id="table" data-toggle="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <ion-icon name="home"></ion-icon>&nbsp; Rent per Month
+                            </th>
+                            <th>
+                                <ion-icon name="lock"></ion-icon>&nbsp; Crime
+                            </th>
+                            <th>
+                                <ion-icon name="contacts"></ion-icon>&nbsp; School
+                            </th>
+                            <th><ion-icon name="rose"></ion-icon>&nbsp; Green Space</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="text-center">
+                            <td>@Model.RentPerMonth</td>
+                            <td>@Model.Safety</td>
+                            <td>@Model.School</td>
+                            <td>@Model.GreenSpace</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <br />
+            <br />
+            <br />
+            @if ((User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value == "User"))
+            {
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="tab-pane" id="add-comment-disabled">
+                                <form action="/LondonMaps/London" method="post" class="form-horizontal" id="commentForm" role="form">
+                                    <div class="form-group">
+                                        <label for="email" class="col-sm-2 control-label">Comment</label>
+                                        <div class="col-12">
+                                            <textarea class="form-control" name="content" required="required" id="addComment" rows="5" style="width: 100%"></textarea>
+                                            <input type="hidden" name="districtName" value="@ViewData["districtName"]" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-success btn-circle text-uppercase" type="submit" id="submitComment">
+                                                <span class="glyphicon glyphicon-send"></span> Summit comment
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    <!--Real Estate Component -->
+    <div class="tab-pane fade" id="realestate" role="tabpanel" aria-labelledby="realestate-tab">
+        <div>
+            @*<div class="container">
+                    <div id="resizable" style="height: 370px;border:1px solid gray;">
+                        <div id="chartContainer1" style="height: 100%; width: 100%;"></div>
+                    </div>
+                </div>
+                <br />
+                <br />*@
+            <div class="container  mt-5">
+                <div class="row row-header d-flex justify-content-center align-items-center mt-3">
+                    <h3 style="text-align: center;" class="text-white ">Average Rent per Month and Tax Rate</h3>
+                </div>
+                <div class="row realestate-values mt-5">
+                    <div class="col-md-6 col-12 d-flex justify-content-around align-items-center">
+                        <div>
+                            <ion-icon style="font-size: 40px;" name="home"></ion-icon>
+                        </div>
+                        <div class="home-values">
+                            <h3>Average Rent per Month</h3>
+                            <p>@Model.RentPerMonth £</p>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6 col-12 d-flex justify-content-around align-items-center">
+                        <div>
+                            <ion-icon style="font-size: 40px;" name="wallet"></ion-icon>
+                        </div>
+                        <div class="tax-rates">
+
+                            <h3>Average Tax</h3>
+                            <p>@Model.GetAverageTax £</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--School Component -->
+    <div class="tab-pane fade" id="school" role="tabpanel" aria-labelledby="school-tab">
+        <div>
+            <div class="container">
+                <div class="container mt-5">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Stats</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Number Of School</th>
+                                        <td>@Model.SchoolCount</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">School Rate</th>
+                                        <td>@Model.School</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Crime Component -->
+    <div class="tab-pane fade" id="crime" role="tabpanel" aria-labelledby="school-tab">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td style="width: 50%" class="columnWithName"><b>Safety in this district</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style='width: @Model.SafetyPercentage%' class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="@Model.SafetyPercentage" aria-valuemin="0" aria-valuemax="100">@Model.SafetyPercentage%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="columnWithName" style="width: 50%"><b>Level of crime in London</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style="width: 61.61%" class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="62" aria-valuemin="0" aria-valuemax="100">61.61%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="columnWithName" style="width: 50%"><b>Crime increasing in the past 3 years in London</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style="width: 67.75%" class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="67.75" aria-valuemin="0" aria-valuemax="100">67.75%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%" class="columnWithName"><b>Problem people using or dealing drugs in London</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style="width: 59.49%" class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuenow="59.49" aria-valuemin="0" aria-valuemax="100">59.49%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%" class="columnWithName"><b>Problem property crimes such as vandalism and theft in London</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style="width: 56.57%" class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="56.57" aria-valuemin="0" aria-valuemax="100">
+                                            56.57%
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 50%" class="columnWithName"><b>Problem violent crimes such as assault and armed robbery</b></td>
+                                <td style="width: 50%">
+                                    <div class="progress">
+                                        <div style="width: 54.13%" class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="54.13" aria-valuemin="0" aria-valuemax="100">54.13%</div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--Transportation Component -->
+    <div class="tab-pane fade" id="transportation" role="tabpanel" aria-labelledby="transportation">
+        <div>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Stats</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Greenspaces</th>
+                                    <td>@Model.GreenSpace</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Travel Rate</th>
+                                    <td>@Model.TravelInfo</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>

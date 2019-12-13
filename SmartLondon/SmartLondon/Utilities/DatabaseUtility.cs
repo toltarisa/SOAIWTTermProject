@@ -139,8 +139,8 @@ namespace SmartLondon.Utilities
                         getSummary = reader.GetString(0);
                         break;
                     }
-                    getSummary = reader.GetDouble(0).ToString();
-
+                    var summaryArr = reader.GetDouble(0).ToString().Split('.');
+                    getSummary = summaryArr[0] + "." + summaryArr[1].Substring(0, 2);
                 }
             }
             connection.Close();
@@ -151,39 +151,131 @@ namespace SmartLondon.Utilities
         //Stored Procedure 4 => GetSafety
         public string GetSafety(string lad)
         {
-            return GetSummary(lad, "GetSafety");
+            string procedureName = "GetSafety";
+            return GetSummary(lad, procedureName);
         }
 
         //Stored Procedure 5 => GetSchools
         public string GetSchools(string lad)
         {
-            return GetSummary(lad, "GetSchools");
+            string procedureName = "GetSchools";
+            return GetSummary(lad, procedureName);
         }
 
         //Stored Procedure 6 => GetGreenSpace
         public string GetGreenSpace(string lad)
         {
-            return GetSummary(lad, "GetGreenSpace");
+            string procedureName = "GetGreenSpace";
+            return GetSummary(lad, procedureName);
         }
 
         //Stored Procedure 7 => GetRentPerMonth
         public string GetRentPerMonth(string lad)
         {
-            return GetSummary(lad, "GetRentPerMonth");
+            string procedureName = "GetRentPerMonth";
+            return GetSummary(lad, procedureName);
         }
 
         //Stored Procedure 8 => GetTravelInfo
         public string GetTravelInfo(string lad)
         {
-            return GetSummary(lad, "GetTravelInfo");
+            string procedureName = "GetTravelInfo";
+
+            return GetSummary(lad, procedureName);
         }
 
         //Stored Procedure 9 => GetGeneralDescription
         public string GetGeneralDescription(string lad)
         {
             string returnType = "string";
+            string procedureName = "GetGeneralDescription";
 
-            return GetSummary(lad, "GetGeneralDescription", returnType);
+            return GetSummary(lad, procedureName, returnType);
+        }
+
+        //Stored Procedure 10 => GetSchoolCount
+        public string GetSchoolCount(string lad)
+        {
+            string returnType = "string";
+            string procedureName = "GetSchoolCount";
+
+            return GetSummary(lad, procedureName, returnType);
+        }
+
+        //Stored Procedure 11 => GetAverageTax
+        public string GetAverageTax(string lad)
+        {
+            string procedureName = "GetAverageTax";
+            return GetSummary(lad, procedureName);
+        }
+
+        //Stored Procedure 12 => AddAComment
+        public void AddAComment(string lad, int userId, string content)
+        {
+            GetConnection();
+            var geoShapeId = GetGeoShapeId(lad);
+            GetConnection();
+            MySqlCommand command = new MySqlCommand("AddAComment", connection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.AddWithValue("userId", userId);
+            command.Parameters.AddWithValue("content", content);
+            command.Parameters.AddWithValue("geoShapeId", geoShapeId);
+
+            command.ExecuteNonQuery();
+            command.Dispose();
+            connection.Close();
+        }
+
+        //Stored Procedure 13 => GetUserId
+        public int GetUserId(string username)
+        {
+            GetConnection();
+            int getId = 0;
+            string procedureName = "GetUserId";
+
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = procedureName;
+            command.Parameters.AddWithValue("username", username);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    getId = reader.GetInt16(0);
+                }
+            }
+            connection.Close();
+
+            return getId;
+        }
+
+        //Stored Procedure 14 => GetGeoShapeId
+        public int GetGeoShapeId(string lad)
+        {
+            GetConnection();
+            int getId = 0;
+            string procedureName = "GetGeoShapeId";
+
+            MySqlCommand command = new MySqlCommand();
+            command.Connection = connection;
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandText = procedureName;
+            command.Parameters.AddWithValue("lad", lad);
+
+            MySqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    getId = reader.GetInt16(0);
+                }
+            }
+            connection.Close();
+
+            return getId;
         }
     }
 }

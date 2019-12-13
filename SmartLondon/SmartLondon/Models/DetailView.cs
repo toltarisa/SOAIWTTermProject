@@ -13,5 +13,8 @@ namespace SmartLondon.Models
         public string RentPerMonth { get; set; }
         public string TravelInfo { get; set; }
         public string GeneralDescription { get; set; }
+        public string SchoolCount { get; set; }
+        public string GetAverageTax { get; set; }
+        public double SafetyPercentage { get; set; }
     }
 }
