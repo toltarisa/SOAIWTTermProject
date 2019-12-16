@@ -230,26 +230,20 @@ namespace SmartLondon.Utilities
         public int GetUserId(string username)
         {
             GetConnection();
-            int getId = 0;
-            string procedureName = "GetUserId";
+            int userId = 0;
 
             MySqlCommand command = new MySqlCommand();
             command.Connection = connection;
-            command.CommandType = CommandType.StoredProcedure;
-            command.CommandText = procedureName;
-            command.Parameters.AddWithValue("username", username);
+            command.CommandText = "SELECT Id FROM users WHERE Username=@username";
+            command.Parameters.AddWithValue("@username", username);
+            MySqlDataReader dr = command.ExecuteReader();
 
-            MySqlDataReader reader = command.ExecuteReader();
-            if (reader.HasRows)
+            while(dr.Read())
             {
-                while (reader.Read())
-                {
-                    getId = reader.GetInt16(0);
-                }
+                userId = (int)dr["Id"];
             }
             connection.Close();
-
-            return getId;
+            return userId;
         }
 
         //Stored Procedure 14 => GetGeoShapeId
@@ -276,6 +270,25 @@ namespace SmartLondon.Utilities
             connection.Close();
 
             return getId;
+        }
+
+        public List<string> GetCommentsByDistrictName(string lad)
+        {
+            GetConnection();
+
+            MySqlCommand command = new MySqlCommand();
+            var commentDetail = new CommentDetailView { Comment = new List<string>() };
+            command.Connection = connection;
+            command.CommandText = "SELECT c.Content FROM comments c inner join geoshape g on c.GeoShapeId = g.id WHERE g.lad=@lad";
+            command.Parameters.AddWithValue("@lad", lad);
+            MySqlDataReader dr = command.ExecuteReader();
+
+            while(dr.Read())
+            {
+                commentDetail.Comment.Add(dr["Content"].ToString());
+            }
+            connection.Close();
+            return commentDetail.Comment;
         }
     }
 }

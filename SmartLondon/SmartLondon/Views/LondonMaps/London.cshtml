@@ -127,16 +127,14 @@
                     <tbody>
                         <tr class="text-center">
                             <td>@Model.RentPerMonth</td>
-                            <td>@Model.Safety</td>
-                            <td>@Model.School</td>
-                            <td>@Model.GreenSpace</td>
+                            <td>@(Convert.ToDouble(Model.Safety) * 100)%</td>
+                            <td>@(Convert.ToDouble(Model.School) * 100)%</td>
+                            <td>@(Convert.ToDouble(Model.GreenSpace) * 100)%</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <br />
-            <br />
             <br />
             @if ((User.FindFirst(claim => claim.Type == ClaimTypes.Role)?.Value == "User"))
             {
@@ -165,18 +163,25 @@
                     </div>
                 </div>
             }
+            <br />
+        </div>
+        <div class="container">
+            <div class="row">
+                @foreach (var detail in Model.CommentsDetail)
+                {
+                    <div class="card mb-1 pb-1" style="display:block !important; width: 100% !important">
+                        <h5 class="card-header"><ion-icon name="person"></ion-icon></h5>
+                        <div class="card-body">
+                            <p class="card-text">@detail</p>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
     <!--Real Estate Component -->
     <div class="tab-pane fade" id="realestate" role="tabpanel" aria-labelledby="realestate-tab">
         <div>
-            @*<div class="container">
-                    <div id="resizable" style="height: 370px;border:1px solid gray;">
-                        <div id="chartContainer1" style="height: 100%; width: 100%;"></div>
-                    </div>
-                </div>
-                <br />
-                <br />*@
             <div class="container  mt-5">
                 <div class="row row-header d-flex justify-content-center align-items-center mt-3">
                     <h3 style="text-align: center;" class="text-white ">Average Rent per Month and Tax Rate</h3>
@@ -214,20 +219,18 @@
                     <div class="row">
                         <div class="table-responsive">
                             <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Stats</th>
-                                    </tr>
-                                </thead>
                                 <tbody>
                                     <tr>
                                         <th scope="row">Number Of School</th>
-                                        <td>@Model.SchoolCount</td>
+                                        <td class="text-center">@Model.SchoolCount</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">School Rate</th>
-                                        <td>@Model.School</td>
+                                        <td class="text-center">
+                                            <div class="progress">
+                                                <div style='width: @(Convert.ToDouble(Model.School) * 100)%' class="progress-bar progress-bar-striped bg-info" role="progressbar" aria-valuenow="@(Convert.ToDouble(Model.School) * 100)" aria-valuemin="0" aria-valuemax="100">@(Convert.ToDouble(Model.School) * 100)%</div>
+                                            </div>
+                                        </td>
                                     </tr>
 
                                 </tbody>
@@ -303,33 +306,69 @@
             </div>
         </div>
     </div>
-    <!--Transportation Component -->
+    <!--Others Component -->
     <div class="tab-pane fade" id="transportation" role="tabpanel" aria-labelledby="transportation">
         <div>
             <div class="container mt-5">
                 <div class="row">
                     <div class="table-responsive">
                         <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Stats</th>
-                                </tr>
-                            </thead>
                             <tbody>
                                 <tr>
-                                    <th scope="row">Greenspaces</th>
-                                    <td>@Model.GreenSpace</td>
+                                    <th style="width: 50%" scope="row">Greenspaces</th>
+                                    <td style="width: 50%">
+                                        <div class="progress">
+                                            <div style="width: @(Convert.ToDouble(Model.GreenSpace) * 100)%" class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-valuenow="@(Convert.ToDouble(Model.GreenSpace) * 100)" aria-valuemin="0" aria-valuemax="100">
+                                                @(Convert.ToDouble(Model.GreenSpace) * 100)%
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <tr>
-                                    <th scope="row">Travel Rate</th>
-                                    <td>@Model.TravelInfo</td>
+                                    <th style="width: 50%" scope="row">Travel Rate</th>
+                                    <td style="width: 50%">
+                                        <div class="progress">
+                                            <div style="width: @(Convert.ToDouble(Model.TravelInfo) * 100)%" class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="@(Convert.ToDouble(Model.TravelInfo) * 100)" aria-valuemin="0" aria-valuemax="100">
+                                                @(Convert.ToDouble(Model.TravelInfo) * 100)%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 50%" scope="row">Air Pollution</th>
+                                    <td style="width: 50%">
+                                        <div class="progress">
+                                            <div style="width: 65.79%" class="progress-bar progress-bar-striped bg-danger" role="progressbar" aria-valuenow="65.79" aria-valuemin="0" aria-valuemax="100">
+                                                65.79%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 50%" scope="row">Water Pollution</th>
+                                    <td style="width: 50%">
+                                        <div class="progress">
+                                            <div style="width: 42.91%" class="progress-bar progress-bar-striped bg-primary" role="progressbar" aria-valuenow="42.91" aria-valuemin="0" aria-valuemax="100">
+                                                42.91%
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th style="width: 50%" scope="row">Drinking Water Pollution and Inaccessibility</th>
+                                    <td style="width: 50%">
+                                        <div class="progress">
+                                            <div style="width: 33.56%" class="progress-bar progress-bar-striped bg-warning" role="progressbar" aria-valuenow="33.56" aria-valuemin="0" aria-valuemax="100">
+                                                33.56%
+                                            </div>
+                                        </div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+</div>

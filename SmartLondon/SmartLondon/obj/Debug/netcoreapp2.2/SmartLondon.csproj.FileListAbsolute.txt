@@ -31,3 +31,4 @@ C:\Users\engin\SOAIWTTermProject\SmartLondon\SmartLondon\obj\Debug\netcoreapp2.2
 C:\Users\engin\SOAIWTTermProject\SmartLondon\SmartLondon\obj\Debug\netcoreapp2.2\Razor\Views\Login\Index.g.cshtml.cs
 C:\Users\engin\SOAIWTTermProject\SmartLondon\SmartLondon\obj\Debug\netcoreapp2.2\Razor\Views\LondonMaps\Index.g.cshtml.cs
 C:\Users\engin\SOAIWTTermProject\SmartLondon\SmartLondon\obj\Debug\netcoreapp2.2\Razor\Views\LondonMaps\London.g.cshtml.cs
+C:\Users\engin\SOAIWTTermProject\SmartLondon\SmartLondon\obj\Debug\netcoreapp2.2\SmartLondon.csprojAssemblyReference.cache

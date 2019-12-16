@@ -34,6 +34,7 @@ namespace SmartLondon.Controllers
                 GeneralDescription = database.GetGeneralDescription(district),
                 SchoolCount = database.GetSchoolCount(district),
                 GetAverageTax = database.GetAverageTax(district),
+                CommentsDetail = database.GetCommentsByDistrictName(district)
             };
 
             ViewData["districtName"] = district;
