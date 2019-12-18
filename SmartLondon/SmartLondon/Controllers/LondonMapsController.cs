@@ -31,7 +31,6 @@ namespace SmartLondon.Controllers
                 GreenSpace = database.GetGreenSpace(district),
                 RentPerMonth = database.GetRentPerMonth(district),
                 TravelInfo = database.GetTravelInfo(district),
-                GeneralDescription = database.GetGeneralDescription(district),
                 SchoolCount = database.GetSchoolCount(district),
                 GetAverageTax = database.GetAverageTax(district),
                 CommentsDetail = database.GetCommentsByDistrictName(district)

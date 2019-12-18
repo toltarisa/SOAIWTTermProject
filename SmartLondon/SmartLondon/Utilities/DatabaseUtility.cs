@@ -184,16 +184,7 @@ namespace SmartLondon.Utilities
             return GetSummary(lad, procedureName);
         }
 
-        //Stored Procedure 9 => GetGeneralDescription
-        public string GetGeneralDescription(string lad)
-        {
-            string returnType = "string";
-            string procedureName = "GetGeneralDescription";
-
-            return GetSummary(lad, procedureName, returnType);
-        }
-
-        //Stored Procedure 10 => GetSchoolCount
+        //Stored Procedure 9 => GetSchoolCount
         public string GetSchoolCount(string lad)
         {
             string returnType = "string";
@@ -202,14 +193,14 @@ namespace SmartLondon.Utilities
             return GetSummary(lad, procedureName, returnType);
         }
 
-        //Stored Procedure 11 => GetAverageTax
+        //Stored Procedure 10 => GetAverageTax
         public string GetAverageTax(string lad)
         {
             string procedureName = "GetAverageTax";
             return GetSummary(lad, procedureName);
         }
 
-        //Stored Procedure 12 => AddAComment
+        //Stored Procedure 11 => AddAComment
         public void AddAComment(string lad, int userId, string content)
         {
             GetConnection();
@@ -226,7 +217,7 @@ namespace SmartLondon.Utilities
             connection.Close();
         }
 
-        //Stored Procedure 13 => GetUserId
+        //Stored Procedure 12 => GetUserId
         public int GetUserId(string username)
         {
             GetConnection();
@@ -246,7 +237,7 @@ namespace SmartLondon.Utilities
             return userId;
         }
 
-        //Stored Procedure 14 => GetGeoShapeId
+        //Stored Procedure 13 => GetGeoShapeId
         public int GetGeoShapeId(string lad)
         {
             GetConnection();
@@ -272,23 +263,24 @@ namespace SmartLondon.Utilities
             return getId;
         }
 
-        public List<string> GetCommentsByDistrictName(string lad)
+        public Comments GetCommentsByDistrictName(string lad)
         {
             GetConnection();
 
             MySqlCommand command = new MySqlCommand();
-            var commentDetail = new CommentDetailView { Comment = new List<string>() };
+            var commentDetail = new Comments() { Content = new List<string>(), Username = new List<string>()};
             command.Connection = connection;
-            command.CommandText = "SELECT c.Content FROM comments c inner join geoshape g on c.GeoShapeId = g.id WHERE g.lad=@lad";
+            command.CommandText = "SELECT c.Content, u.Username FROM comments c inner join geoshape g on c.GeoShapeId = g.id inner join users u on u.Id = c.UserId WHERE g.lad=@lad";
             command.Parameters.AddWithValue("@lad", lad);
             MySqlDataReader dr = command.ExecuteReader();
 
             while(dr.Read())
             {
-                commentDetail.Comment.Add(dr["Content"].ToString());
+                commentDetail.Username.Add(dr["Username"].ToString());
+                commentDetail.Content.Add(dr["Content"].ToString());
             }
             connection.Close();
-            return commentDetail.Comment;
+            return commentDetail;
         }
     }
 }

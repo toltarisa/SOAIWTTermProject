@@ -16,6 +16,6 @@ namespace SmartLondon.Models
         public string SchoolCount { get; set; }
         public string GetAverageTax { get; set; }
         public double SafetyPercentage { get; set; }
-        public List<string> CommentsDetail { get; set; }
+        public Comments CommentsDetail { get; set; }
     }
 }
